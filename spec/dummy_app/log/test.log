@@ -1,0 +1,1432 @@
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 3.2ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/registrations/new.html.erb within layouts/application (8.3ms)
+Completed 200 OK in 21.6ms (Views: 9.7ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$aQVyWRtxmMuFfWt6NHLOmOIJlurjMka40/NBitN3JOjrbU0ynxmf2"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:19:22.243380', "current_sign_in_at" = '2014-09-12 11:19:22.243380', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:19:22.243860' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 17.4ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 2.9ms (Views: 2.4ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 4.5ms (ActiveRecord: 0.3ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1.2ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$JQZnVpbJNZb2UMUxCtktp.91RIAWdnrv89ze0XXGw4c1B58A1m5oi"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.9ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (5.4ms)
+Completed 200 OK in 8.0ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:19:22.296183' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:19:22.305654', "current_sign_in_at" = '2014-09-12 11:19:22.305654', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:19:22.306009' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 6.7ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 1.4ms (Views: 1.2ms | ActiveRecord: 0.1ms)
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$FTSXF/QvdurfAi1IE7sVDu6GKz8XsMZpl1rQScp5C0WO.JkdXz1TK"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 2.7ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:19:22.327221' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Completed 401 Unauthorized in 2.7ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 4.2ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$GmxGw5ygbi4HYOkdhjLg7e9U02D5v4ADpOdOZG7/r5ziVkzq.OWiu"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:19:22 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.1ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.5ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 4.6ms (Views: 4.3ms | ActiveRecord: 0.0ms)
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:19:22.364942', "current_sign_in_at" = '2014-09-12 11:19:22.364942', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:19:22.365233' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 4.5ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:22 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 1.6ms (Views: 1.2ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.0ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (21.0ms)
+Completed 200 OK in 35ms (Views: 23.1ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["email", "test@example.com"], ["encrypted_password", "$2a$04$W43Mk35qE7FsyQLPNZVA0uG4PQFtVMqFekYLHgsc.OM0eSlpIZhXm"], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["last_sign_in_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["current_sign_in_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["last_sign_in_ip", "127.0.0.1"], ["current_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 15ms (ActiveRecord: 1.3ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.1ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 4ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["email", "test@example.com"], ["encrypted_password", "$2a$04$GQ4xMjeIZXdqUNzzpNGltOU.MMuMpCtg5Z/WANDW23v4G7p8PewKe"], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.4ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (6.1ms)
+Completed 200 OK in 8ms (Views: 7.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", true], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["email", "test@example.com"], ["encrypted_password", "$2a$04$49A8/3kpEO5xS8TVVYUpFebBQMeuz5/o.Hbys2tctQY8bwSyCrhdy"], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (18.9ms)
+Completed 200 OK in 20ms (Views: 19.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", true], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00], ["email", "test@example.com"], ["encrypted_password", "$2a$04$WZeMDYYfRwqQM3zFu/Er1ec0oSJM6QlYeaoy3TM01tlFHnrOkHu4O"], ["updated_at", Fri, 12 Sep 2014 11:19:27 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:27 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (11.1ms)
+Completed 200 OK in 13ms (Views: 12.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (16.3ms)
+Completed 200 OK in 20ms (Views: 17.9ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:19:33.715771"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$clW.gsUakO0ciK6rb627i.yGMj9pwqXlkQrCsc8xu5YtjIQrBbgum"], ["updated_at", "2014-09-12 11:19:33.715771"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-09-12 11:19:33.717281"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:19:33.717281"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:19:33.718167"]]
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 15ms (ActiveRecord: 0.7ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:19:33.739519"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$8KWO/.Os3NZ79Q0zfIo8O.0uzlQA.Y/Tr2EHsm8LKiMKKoEFn6OJm"], ["updated_at", "2014-09-12 11:19:33.739519"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 5ms (Views: 4.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:19:33.756280"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$T6107DOIsHh4rNTF9Pul8uf/AnD2gZaptdhiMheRnrl7.WyRJBRH6"], ["updated_at", "2014-09-12 11:19:33.756280"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.4ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (24.4ms)
+Completed 200 OK in 26ms (Views: 24.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:19:33.792384"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:19:33.798939"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$WgMjf..8QwlVkAowwV4UVO789TDf0ffrqd7rO/g20IFrrVBbObDiW"], ["updated_at", "2014-09-12 11:19:33.798939"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:19:33 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:19:33.810621"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 12ms (Views: 11.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.1ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (17.5ms)
+Completed 200 OK in 21ms (Views: 19.2ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:20:15.095119"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$2anz1D5pIAal3/U6s3qHW.k5FUUiBRWMhznFS/rq0zqS1ZFkrYEoC"], ["updated_at", "2014-09-12 11:20:15.095119"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-09-12 11:20:15.096687"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:20:15.096687"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:20:15.097529"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 17ms (ActiveRecord: 0.7ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.3ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 6ms (ActiveRecord: 0.5ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.3ms)[0m  DELETE FROM "users";
+  [1m[36m (0.3ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:20:15.126030"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$I3Sv7q85kwhzJ5xA1oSrUO/Y/K8/h2bkTexWyg3VfDIQLO2B9Rkk6"], ["updated_at", "2014-09-12 11:20:15.126030"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.5ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 5ms (Views: 4.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.5ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.3ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:20:15.149833"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$c4wXWaJYZZdAx4uAETbuqushklsTUoYOW1T0mdLic3XQSSfYC7GMy"], ["updated_at", "2014-09-12 11:20:15.149833"]]
+  [1m[36m (0.2ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:20:15.190708"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:20:15.197702"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$DHC.dxpd3pU62CvnydqqyOtQl1Qjxt8KP6sOdv3686wsJo64qVpGC"], ["updated_at", "2014-09-12 11:20:15.197702"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:15 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:20:15.210704"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/registrations/new.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 20.7ms (Views: 9.5ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$EM8qWSpTVuFORrzt2dushei0DFJkhJ.It06ERurPZDAQoVwkbMqIO"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00]]
+  [1m[35m (0.1ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:20:26.703059', "current_sign_in_at" = '2014-09-12 11:20:26.703059', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:20:26.703647' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 15.9ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.6ms)
+Completed 200 OK in 2.6ms (Views: 2.3ms | ActiveRecord: 0.1ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 3.3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  DELETE FROM "users";
+  [1m[36m (0.0ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.0ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$7pZkS05/rf.dh2EVMwLZZOzC2iYONrupnJ79SnCW3pNdsyQY5Tl0a"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.4ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 4.7ms (Views: 4.2ms | ActiveRecord: 0.0ms)
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:20:26.751795', "current_sign_in_at" = '2014-09-12 11:20:26.751795', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:20:26.752441' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 7.8ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 1.7ms (Views: 1.4ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$5lGTYcgUNMZ.YTP9l.VngON8Ce2R3sT9ONpKdmT0qDnsvYFB4VmHG"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00]]
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 2.0ms (Views: 1.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 3.0ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:20:26.781552' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Completed 401 Unauthorized in 4.5ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.5ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 8.8ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$VxdufZ5vNqAFn658uuYyX.XKKc3D4NljDfnD71PDdLw6Xmduq96ly"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:20:26 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1.3ms (Views: 1.2ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 2.9ms (Views: 2.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:20:26.822892' WHERE "users"."id" = 1[0m
+  [1m[35m (0.1ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:20:26.834247', "current_sign_in_at" = '2014-09-12 11:20:26.834247', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:20:26.834691' WHERE "users"."id" = 1
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 7.0ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 1.5ms (Views: 1.2ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:20:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (16.5ms)
+Completed 200 OK in 30ms (Views: 18.7ms | ActiveRecord: 0.4ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:23:07.326475"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$.7.BPyK3JfR9l0gEEi9IJOFgS3WgzJBT/KiO2iQk/CXyHH4y54lQu"], ["updated_at", "2014-09-12 11:23:07.326475"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["current_sign_in_at", "2014-09-12 11:23:07.328129"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:23:07.328129"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:23:07.328971"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 13ms (ActiveRecord: 0.6ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:23:07.355683"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$r85WwXXJxDgmcHNvkEDSI./gBIM3d1tQ0YfzTbsKLAjiIsf0BPKNm"], ["updated_at", "2014-09-12 11:23:07.355683"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.5ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 5ms (Views: 4.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.3ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:23:07.372338"]]
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.2ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:23:07.381956"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$PILFuBSaH/3WE1MZuYfOxOD/oq2bOZUDCVTyMVN7fs2vnhAEsjMz."], ["updated_at", "2014-09-12 11:23:07.381956"]]
+  [1m[35m (0.1ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (17.1ms)
+Completed 200 OK in 18ms (Views: 17.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:23:07.409279"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:23:07.415340"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$6yIdIzepq4ZSLFOr1MZzNenL9P0Va8AY2cSqeAUWT2zUlkaG9khXq"], ["updated_at", "2014-09-12 11:23:07.415340"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:07 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:23:26.630440"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$2v59LHwUU.cxndZLxA.K5.8KHWNw.JTjt7iZYr2l0ZkS/ScabbNFC"], ["updated_at", "2014-09-12 11:23:26.630440"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 12ms (Views: 11.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (7.7ms)
+Completed 200 OK in 11ms (Views: 9.4ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:23:26.670401"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$YybOw4.lJjAR7QuD.flBAecPb0kco9JBZVpjTpXPil/hneB2U1PY2"], ["updated_at", "2014-09-12 11:23:26.670401"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:23:26.682481"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:23:26.689489"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$..vt/brhUQowJ46fiYywI.IdBcYGF/yLP.5e7nRt1p7x3FIv30DSa"], ["updated_at", "2014-09-12 11:23:26.689489"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:23:26.701309"]]
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 4ms (Views: 3.7ms | ActiveRecord: 0.0ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:23:26.751984"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$1O1zeEIGf.OQ2/GJdojUQulVzFSjSqPl7Z6sBDtYLlYG6VGeITNES"], ["updated_at", "2014-09-12 11:23:26.751984"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["current_sign_in_at", "2014-09-12 11:23:26.753415"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:23:26.753415"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:23:26.754267"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 10ms (ActiveRecord: 0.5ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.1ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:23:26 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (16.1ms)
+Completed 200 OK in 30ms (Views: 18.4ms | ActiveRecord: 0.4ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2014-09-12 11:24:43.134197"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$DpaN4uM7u9D9f12.E6LM3OOBH/p2zeh.VUjvWj9ECSgJ81sVZN8/C"], ["updated_at", "2014-09-12 11:24:43.134197"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["current_sign_in_at", "2014-09-12 11:24:43.135934"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:24:43.135934"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:24:43.136828"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 13ms (ActiveRecord: 0.6ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:24:43.162884"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$IfSN02Yx1XjzUYkncMWIF.OpK1S3BwroqPKpT.KyISW..blvLr9cG"], ["updated_at", "2014-09-12 11:24:43.162884"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.4ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 5ms (Views: 4.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:24:43.178037"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:24:43.185568"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$DzCIMMFtxsp4MyHKt1rAX.Cr39Xl0PLT27cUwQz/NQunTNLowHjWi"], ["updated_at", "2014-09-12 11:24:43.185568"]]
+  [1m[35m (0.2ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (22.0ms)
+Completed 200 OK in 23ms (Views: 22.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:24:43.220372"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:24:43.226685"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$k0K/sZ6QFqsKO/9R1vwyOu7P9TNq2UjszV1IHskuqkCS0KBlsU4kW"], ["updated_at", "2014-09-12 11:24:43.226685"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:43 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 3.0ms (Views: 2.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.0ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$UW/sESwrkqhgHXKM9xz4gOuW6CaGn/fFm1YkNBPbgzNRMLo0G2Cma"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.9ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (11.8ms)
+Completed 200 OK in 15.4ms (Views: 13.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$i0PQwNRJeE83Nl9YYmawJuGPM1Q5ErLZULTT1vGfq6HOsv4r0rRLO"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.2ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 3.6ms (Views: 3.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:24:48.664452' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$5Q9dTw1HKQoIVyIWwTh5c.NeR7BeRRvdJHcD7QHJJdOl42vWrlQ4e"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 2.3ms (Views: 2.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:24:48.686039' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/registrations/new.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 4.2ms (Views: 3.6ms | ActiveRecord: 0.0ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$4uCPmQhxmMiXlY/75.RSMe/aukrQHBja3qR1z7ENDRrzjmeJTDB3C"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:24:48 UTC +00:00]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:24:48.714011', "current_sign_in_at" = '2014-09-12 11:24:48.714011', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:24:48.714410' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 8.3ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 2.5ms (Views: 2.2ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 3.3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:24:48 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.1ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) 
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140516191259')
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 2.7ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.2ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/registrations/new.html.erb within layouts/application (7.9ms)
+Completed 200 OK in 21.6ms (Views: 9.3ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$XCyJX2tjc6nursMXL/8VKO43bsnQF8cqnbzLV7O4OnQQAywNyXSiO"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:25:32.408703', "current_sign_in_at" = '2014-09-12 11:25:32.408703', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:25:32.409202' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 19.8ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 3.0ms (Views: 2.7ms | ActiveRecord: 0.1ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 4.3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 2.0ms (Views: 1.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$KusQe1jErj4PsX.L2grG1e3wiB5EpqVfnYSHZs0oY/s8z9FLpFTOi"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.5ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 8.7ms (Views: 8.0ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:25:32.460450' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  UPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:25:32.470411', "current_sign_in_at" = '2014-09-12 11:25:32.470411', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:25:32.470782' WHERE "users"."id" = 1
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 6.3ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 1.3ms (Views: 1.1ms | ActiveRecord: 0.1ms)
+  [1m[36m (0.0ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$SoMOrLZPMZhdF/KnLadtwe/.aL.0gZOHQF6VCfZlrvxGyyPOanMuC"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1.0ms (Views: 1.0ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 2.8ms (Views: 2.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "otp_required_for_login" = 't', "updated_at" = '2014-09-12 11:25:32.491957' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+Completed 401 Unauthorized in 2.7ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (1.0ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (3.6ms)
+Completed 200 OK in 7.1ms (Views: 4.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.3ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.2ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "current_sign_in_at", "current_sign_in_ip", "email", "encrypted_otp_secret", "encrypted_otp_secret_iv", "encrypted_otp_secret_salt", "encrypted_password", "last_sign_in_at", "last_sign_in_ip", "otp_remember_token", "otp_remember_token_at", "otp_required_for_login", "remember_created_at", "reset_password_sent_at", "reset_password_token", "sign_in_count", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00], ["current_sign_in_at", nil], ["current_sign_in_ip", nil], ["email", "test@example.com"], ["encrypted_otp_secret", nil], ["encrypted_otp_secret_iv", nil], ["encrypted_otp_secret_salt", nil], ["encrypted_password", "$2a$04$rvl/6UwhZ2kT6TPyMyhpc.A5TQeHYlUQ0Y2xCtCGxVp.BhNYzEiR6"], ["last_sign_in_at", nil], ["last_sign_in_ip", nil], ["otp_remember_token", nil], ["otp_remember_token_at", nil], ["otp_required_for_login", false], ["remember_created_at", nil], ["reset_password_sent_at", nil], ["reset_password_token", nil], ["sign_in_count", 0], ["updated_at", Fri, 12 Sep 2014 11:25:32 UTC +00:00]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 2.3ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.2.4/app/views/devise/sessions/new.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 3.6ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2014-09-12 11:25:32.532053', "current_sign_in_at" = '2014-09-12 11:25:32.532053', "last_sign_in_ip" = '127.0.0.1', "current_sign_in_ip" = '127.0.0.1', "sign_in_count" = 1, "updated_at" = '2014-09-12 11:25:32.532476' WHERE "users"."id" = 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 5.2ms (ActiveRecord: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:32 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 1.3ms (Views: 1.1ms | ActiveRecord: 0.1ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.3ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.3ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "encrypted_otp_secret" varchar(255), "encrypted_otp_secret_iv" varchar(255), "encrypted_otp_secret_salt" varchar(255), "otp_required_for_login" boolean DEFAULT 'f' NOT NULL, "otp_remember_token" varchar(255), "otp_remember_token_at" datetime) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.5ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140516191259')[0m
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 12ms (Views: 11.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+Started GET "/users/sign_up" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (1.1ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/registrations/new.html.erb within layouts/application (18.9ms)
+Completed 200 OK in 23ms (Views: 20.7ms | ActiveRecord: 0.3ms)
+Started POST "/users" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "password_confirmation"=>"password"}, "commit"=>"Sign up"}
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:25:41.247101"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$l.ou6NkYtKEPQbbMnPmUGepJi3TpE93r8UilapeP0EJAAEC3WQea6"], ["updated_at", "2014-09-12 11:25:41.247101"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-09-12 11:25:41.248671"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:25:41.248671"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:25:41.249623"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 14ms (ActiveRecord: 0.6ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.2ms)
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:25:41.270020"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$EvcUiSJ8GDVHHMQ2gyxuruyEw9mJuLV50PAZZ8UNz1HY0Begsegoi"], ["updated_at", "2014-09-12 11:25:41.270020"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.4ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 4ms (Views: 3.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:25:41.283605"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.1ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["current_sign_in_at", "2014-09-12 11:25:41.298267"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:25:41.298267"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:25:41.298717"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://www.example.com/
+Completed 302 Found in 10ms (ActiveRecord: 0.6ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  Rendered application/hello.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:25:41.326069"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$lBd7TqxjK9t4W7i4xU9VMOA7AXCCBswRLqhKDmiF55I6d.6mS.w6W"], ["updated_at", "2014-09-12 11:25:41.326069"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "otp_required_for_login" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["otp_required_for_login", "t"], ["updated_at", "2014-09-12 11:25:41.337573"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1[0m
+Completed 401 Unauthorized in 3ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"123", "remember_me"=>"0"}, "commit"=>"Log in"}
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 5ms (Views: 2.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  DELETE FROM "users";
+  [1m[36m (0.1ms)[0m  [1mSELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';[0m
+  [1m[35m (0.1ms)[0m  DELETE FROM sqlite_sequence where name = 'users';
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'test@example.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-09-12 11:25:41.360403"], ["email", "test@example.com"], ["encrypted_password", "$2a$04$f3MUxEK9vZNjj0bZ3kKEKuZ6Z5hRfln9pqOJxiWeh16tWrlmHg5Mi"], ["updated_at", "2014-09-12 11:25:41.360403"]]
+  [1m[35m (0.1ms)[0m  commit transaction
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  Rendered application/hello.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/shared/_links.erb (0.3ms)
+  Rendered /home/emq/.gem/ruby/2.1.2/gems/devise-3.3.0/app/views/devise/sessions/new.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "user"=>{"email"=>"test@example.com", "password"=>"password", "remember_me"=>"0"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'test@example.com'  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.1ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-09-12 11:25:41.376625"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-09-12 11:25:41.376625"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-09-12 11:25:41.376993"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.3ms)
+Started GET "/" for 127.0.0.1 at 2014-09-12 13:25:41 +0200
+Processing by ApplicationController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  Rendered application/hello.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.1ms)
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM "users";[0m
+  [1m[35m (0.1ms)[0m  SELECT name FROM sqlite_master WHERE type='table' AND name='sqlite_sequence';
+  [1m[36m (0.1ms)[0m  [1mDELETE FROM sqlite_sequence where name = 'users';[0m
