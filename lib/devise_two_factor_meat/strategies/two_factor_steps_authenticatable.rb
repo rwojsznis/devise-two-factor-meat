@@ -22,7 +22,7 @@ module Devise
         if validate(resource) { resource.otp_required_for_login }
           unless resource.valid_otp_rembember_token?(cookies)
             cookies.delete(:otp_remember_token)
-            session[Devise.otp_challenge_key] = true
+            session[Devise.otp_challenge_key] = resource.generate_otp_temporary_token
           end
 
           super

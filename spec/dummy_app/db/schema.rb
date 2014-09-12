@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(version: 20140516191259) do
     # devise-two-factor-meat
     t.string "otp_remember_token"
     t.datetime "otp_remember_token_at"
+    t.string "otp_temporary_token"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", "otp_temporary_token", unique: true
 end
