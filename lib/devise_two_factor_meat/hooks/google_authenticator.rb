@@ -16,9 +16,7 @@ Warden::Manager.after_authentication do |resource, warden, options|
       # This seems like some sane idea
       # we should redirect user to custom otp_challenge_{resource} path
       # and deal with OTP there
-      response = Rack::Response.new
-      response.redirect "/boo"
-      throw :warden, response.finish
+      throw :warden, DeviseTwoFactorMeat::OTPChallengeResponse.new(resource).finish
     end
   end
 end
