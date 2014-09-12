@@ -1,7 +1,7 @@
+require 'devise/models/otp_challengable'
 require 'devise-two-factor'
 require 'devise_two_factor_meat/strategies/two_factor_steps_authenticatable'
 require 'devise_two_factor_meat/hooks/google_authenticator'
-require 'devise_two_factor_meat/models/two_factor_authenticatable'
 require 'devise_two_factor_meat/rails/routes'
 
 module Devise
@@ -15,5 +15,4 @@ module Devise
   @@otp_remember_token_duration = 30.days
 end
 
-
-# Devise.add_module :otp_challengeable, :controller => :otp_challenge, :route => :otp_challenge)
+Devise.add_module(:otp_challengable, :route => :otp_challenge, :strategy => false, :controller => :otp_challenge, :model => true)
