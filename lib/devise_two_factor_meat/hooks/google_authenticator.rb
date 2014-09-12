@@ -1,5 +1,7 @@
 # Executed every time the user is authenticated (first time in each session).
 Warden::Manager.after_authentication do |resource, warden, options|
+  scope = options[:scope]
+
   if resource.otp_required_for_login && !resource.valid_otp_rembember_token?(warden.cookies)
     if !resource.valid_otp_temporary_token?(warden.request.session)
       # otp challenge failed?
@@ -16,6 +18,7 @@ Warden::Manager.after_authentication do |resource, warden, options|
       # This seems like some sane idea
       # we should redirect user to custom otp_challenge_{resource} path
       # and deal with OTP there
+      warden.logout(scope)
       throw :warden, DeviseTwoFactorMeat::OTPChallengeResponse.new(resource).finish
     end
   end

@@ -41,7 +41,7 @@ describe "Signing in" do
           fill_in 'user_password', with: 'password'
           click_button login_button
 
-          # save_and_open_page
+          expect(page).to have_text('OTP Challeng')
         end
       end
     end
