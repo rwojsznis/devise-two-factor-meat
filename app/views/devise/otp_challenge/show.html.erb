@@ -1,1 +1,8 @@
 <h1>OTP Challenge</h1>
+
+<%= form_tag([resource_name, :otp_challenge], method: :put) do |f| %>
+  <%= hidden_field_tag :otp_temporary_token, @otp_temporary_token %>
+  <%= text_field_tag :otp_token, "", autocomplete: :off %>
+
+  <p><%= submit_tag "Submit" %></p>
+<% end %>

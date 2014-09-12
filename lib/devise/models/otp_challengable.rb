@@ -4,12 +4,12 @@ module Devise
       extend ActiveSupport::Concern
 
       module ClassMethods
-        def valid_otp_temporary_token?(session)
+        def resource_from_otp_temporary_token(session)
           token = session[Devise.otp_challenge_key]
 
           return false if token.blank?
 
-          where(otp_temporary_token: token).any?
+          where(otp_temporary_token: token).first
         end
       end
 

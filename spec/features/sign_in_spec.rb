@@ -42,6 +42,10 @@ describe "Signing in" do
           click_button login_button
 
           expect(page).to have_text('OTP Challeng')
+
+          fill_in 'otp_token', with: '123'
+          click_button 'Submit'
+          expect(page).to have_text('Invalid OTP')
         end
       end
     end
