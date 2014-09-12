@@ -26,6 +26,14 @@ module Devise
         update_column(:otp_temporary_token, nil)
       end
 
+      def regenerate_otp_remember_token
+        self.otp_remember_token = Devise.friendly_token
+        self.otp_remember_token_at = Time.now
+        save
+
+        otp_remember_token
+      end
+
       def generate_otp_temporary_token
         loop do
           self.otp_temporary_token = Devise.friendly_token

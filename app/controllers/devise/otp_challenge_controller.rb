@@ -10,7 +10,8 @@ class Devise::OtpChallengeController < DeviseController
   def update
     @resource = resource_from_temporary_token
 
-    if @resource.valid_otp?(params[:otp_temporary_token])
+    if @resource.valid_otp?(params[:otp_token])
+      cookies[:otp_remember_token] = @resource.regenerate_otp_remember_token
       sign_in_and_redirect @resource
     else
       redirect_to root_path, alert: "Invalid OTP"

@@ -41,7 +41,7 @@ describe "Signing in" do
           fill_in 'user_password', with: 'password'
           click_button login_button
 
-          expect(page).to have_text('OTP Challeng')
+          expect(page).to have_text('OTP Challenge')
 
           fill_in 'otp_token', with: '123'
           click_button 'Submit'
@@ -52,7 +52,22 @@ describe "Signing in" do
 
     describe "happy path" do
       describe "with valid password & valid OTP" do
+        before do
+          expect(User).to receive(:resource_from_otp_temporary_token).at_least(1).times { user }
+          expect(user).to receive(:valid_otp?).with('123') { true }
+        end
 
+        it "logs in user successfully" do
+          fill_in 'user_email', with: user.email
+          fill_in 'user_password', with: 'password'
+          click_button login_button
+
+          expect(page).to have_text('OTP Challenge')
+          fill_in 'otp_token', with: '123'
+          click_button 'Submit'
+
+          expect(page).to have_text('You are signed in')
+        end
       end
     end
   end
