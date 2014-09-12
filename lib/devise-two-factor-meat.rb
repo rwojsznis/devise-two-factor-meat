@@ -2,6 +2,7 @@ require 'devise-two-factor'
 require 'devise_two_factor_meat/strategies/two_factor_steps_authenticatable'
 require 'devise_two_factor_meat/hooks/google_authenticator'
 require 'devise_two_factor_meat/models/two_factor_authenticatable'
+require 'devise_two_factor_meat/rails/routes'
 
 module Devise
   # Session key used in TwoFactorStepsAuthenticatable strategy
@@ -15,3 +16,4 @@ module Devise
 end
 
 
+# Devise.add_module :otp_challengeable, :controller => :otp_challenge, :route => :otp_challenge)
